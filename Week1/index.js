@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-// hashing for the given input
+// hashing for the given input.
 const input = "100xdevs";
 const hash = crypto.createHash("sha256").update(input).digest('hex');
 console.log(hash);
