@@ -14,5 +14,36 @@ function asciiToBytes(asciiString) {
 }
 // Example usage:
 const ascii = "Hello";
-const byteArray = asciiToBytes(ascii);
-console.log(byteArray); // Output: Uint8Array(5) [72, 101, 108, 108, 111]
+const byteArr = asciiToBytes(ascii);
+console.log(byteArr); // Output: Uint8Array(5) [72, 101, 108, 108, 111]
+
+// Array to hex
+function arrayToHex(byteArray) {
+  let hexString = '';
+  for (let i = 0; i < byteArray.length; i++) {
+    hexString += byteArray[i].toString(16).padStart(2, '0');
+  }
+  return hexString;
+}
+// Example usage:
+const byteArray = new Uint8Array([72, 101, 108, 108, 111]); // Corresponds to "Hello"
+const hexString = arrayToHex(byteArray);
+console.log(hexString); // Output: "48656c6c6f"
+
+//Hex to array
+function hexToArray(hexString) {
+  const byteArray = new Uint8Array(hexString.length / 2);
+  for (let i = 0; i < byteArray.length; i++) {
+    byteArray[i] = parseInt(hexString.substr(i * 2, 2), 16);
+  }
+  return byteArray;
+}
+// Example usage:
+const hex = "48656c6c6f";
+const byteArrayFromHex = hexToArray(hex);
+console.log(byteArrayFromHex); // Output: Uint8Array(5) [72, 101, 108, 108, 111]
+
+// Base64
+const uint8Array = new Uint8Array([72, 101, 108, 108, 111]);
+const base64Encoded = Buffer.from(uint8Array).toString("base64");
+console.log(base64Encoded);
