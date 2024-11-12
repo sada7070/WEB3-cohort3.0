@@ -1,3 +1,5 @@
+// encoding and decoding
+
 // UInt8Array to ascii
 function bytesToAscii(byteArray) {
   return new TextDecoder().decode(byteArray);
