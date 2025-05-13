@@ -4,6 +4,7 @@ import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-r
 // Default styles that can be overridden by your app
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { RequestAirdrop } from './components/RequestAirdrop';
+import { ShowSolBalance } from './components/ShowSolBalance';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
                     <div className='mt-8'>
                       <RequestAirdrop />
                     </div>
-
+                    <ShowSolBalance />
                   </div>
                 </WalletModalProvider>
             </WalletProvider>   
