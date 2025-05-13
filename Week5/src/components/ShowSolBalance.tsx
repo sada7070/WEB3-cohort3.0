@@ -17,7 +17,7 @@ export function ShowSolBalance() {
         getBalance();
     },[connection, wallet.publicKey]);
 
-    return <div className="mt-8">
-        <p className="text-white">SOL Balance: {balance/LAMPORTS_PER_SOL}</p>
+    return <div className="mt-10">
+        <p className="text-white text-2xl">Balance: {balance/LAMPORTS_PER_SOL} SOL</p>
     </div>
 }
