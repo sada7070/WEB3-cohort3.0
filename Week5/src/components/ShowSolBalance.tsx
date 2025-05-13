@@ -5,19 +5,36 @@ import { useEffect, useState } from "react";
 export function ShowSolBalance() {
     const wallet = useWallet();
     const { connection } = useConnection();
-    const [ balance, setBalance ] = useState(0);
+    const [balance, setBalance] = useState<number | null>(null);
 
     useEffect(() => {
-        async function getBalance() {
-            if(wallet.publicKey) {
-                setBalance(await connection.getBalance(wallet.publicKey));
-            }
+        if (!wallet.connected || !wallet.publicKey) {
+            setBalance(null);
+            return;
         }
 
-        getBalance();
-    },[connection, wallet.publicKey]);
+        const getBalance = async () => {
+            try {
+                const lamports = await connection.getBalance(wallet.publicKey!);
+                setBalance(lamports);
+            } catch (err) {
+                console.error("Failed to get balance:", err);
+                setBalance(null);
+            }
+        };
 
-    return <div className="mt-10">
-        <p className="text-white text-2xl">Balance: {balance/LAMPORTS_PER_SOL} SOL</p>
-    </div>
+        getBalance();
+    }, [connection, wallet.connected, wallet.publicKey]);
+
+    return (
+        <div className="mt-10">
+            <p className="text-white text-2xl">
+                {wallet.connected
+                    ? balance !== null
+                        ? `Balance: ${(balance / LAMPORTS_PER_SOL).toFixed(4)} SOL`
+                        : "Loading..."
+                    : "Wallet not connected"}
+            </p>
+        </div>
+    );
 }
