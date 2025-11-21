@@ -1,19 +1,50 @@
-fn main() {
-    let str = String::from("Sada");
+// fn main() {
+//     let str = String::from("Sada");
 
-    let str_len = length(&str);             // borrowing 'str' rather than transfering ownership
+//     let str_len = length(&str);             // borrowing 'str' rather than transfering ownership
 
-    println!("{}", str_len);
-    println!("{}", str);
+//     println!("{}", str_len);
+//     println!("{}", str);
 
 
-        let mut s1 = String::from("Sada");
-        let s2 = &mut s1;
-        //let s3 = &s1;                       // when one mut variable is borrowed, it cannot be borrowed again for anything(you can borrow immutable variable for anytime we want)
+//         let mut s1 = String::from("Sada");
+//         let s2 = &mut s1;
+//         //let s3 = &s1;                       // when one mut variable is borrowed, it cannot be borrowed again for anything(you can borrow immutable variable for anytime we want)
 
-        println!("{}", s2);
+//         println!("{}", s2);
+//     }
+
+// fn length(s: &String) -> usize {
+//     return s.len();
+// }
+
+
+struct Rect {
+    height: u32,
+    width: u32,
+}
+
+impl Rect {
+    fn area(&self) -> u32 {
+        return self.height * self.width;
     }
 
-fn length(s: &String) -> usize {
-    return s.len();
+    fn perimeter(&self) ->u32 {
+        return 2 * (self.height + self.width);
+    }
+
+    fn printer() {
+        println!("Prints something");
+    }
+}
+
+fn main() {
+    let r = Rect {
+        width: 6,
+        height:2,
+    };
+
+    println!("area: {}", r.area());
+    println!("perimeter: {}", r.perimeter());
+    Rect::printer();                        // since 'printer' function does not have 'self', it is not part of 'r'. It is  part of struct Rect. So to call we use this syntax
 }
