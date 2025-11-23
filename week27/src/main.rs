@@ -18,33 +18,60 @@
 //     return s.len();
 // }
 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-struct Rect {
-    height: u32,
-    width: u32,
-}
+// struct Rect {
+//     height: u32,
+//     width: u32,
+// }
 
-impl Rect {
-    fn area(&self) -> u32 {
-        return self.height * self.width;
-    }
+// impl Rect {
+//     fn area(&self) -> u32 {
+//         return self.height * self.width;
+//     }
 
-    fn perimeter(&self) ->u32 {
-        return 2 * (self.height + self.width);
-    }
+//     fn perimeter(&self) ->u32 {
+//         return 2 * (self.height + self.width);
+//     }
 
-    fn printer() {
-        println!("Prints something");
-    }
+//     fn printer() {
+//         println!("Prints something");
+//     }
+// }
+
+// fn main() {
+//     let r = Rect {
+//         width: 6,
+//         height:2,
+//     };
+
+//     println!("area: {}", r.area());
+//     println!("perimeter: {}", r.perimeter());
+//     Rect::printer();                        // since 'printer' function does not have 'self', it is not part of 'r'. It is  part of struct Rect. So to call we use this syntax
+// }
+
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//enums and pattern matching
+
+enum Direction {
+    North,
+    South,
+    East,
+    West,
 }
 
 fn main() {
-    let r = Rect {
-        width: 6,
-        height:2,
-    };
+    let direction = Direction::East;
 
-    println!("area: {}", r.area());
-    println!("perimeter: {}", r.perimeter());
-    Rect::printer();                        // since 'printer' function does not have 'self', it is not part of 'r'. It is  part of struct Rect. So to call we use this syntax
+    steer(direction);
+}
+
+fn steer(dir: Direction) {
+    match dir {
+        Direction::North => println!("North direction"),
+        Direction::South => println!("South direction"),
+        _ => println!("Horizontal direction"),                  // default
+    }
 }
