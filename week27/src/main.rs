@@ -78,27 +78,67 @@
 
 // enums with values
 
+// enum Shape {
+//     Square(f32),
+//     Circle(f32),
+//     Rectangle(f32, f32)
+// }
 
-enum Shape {
-    Square(f32),
-    Circle(f32),
-    Rectangle(f32, f32)
-}
+// fn main() {
+//     let shape_square = Shape::Square(4.0);
+//     let shape_circle = Shape::Circle(5.0);
+//     let shape_rect = Shape::Rectangle(3.0, 5.0);
+
+//     println!("{}", calculate_area(shape_square));
+//     println!("{}", calculate_area(shape_circle));
+//     println!("{}", calculate_area(shape_rect));
+// }
+
+// fn calculate_area(s: Shape) -> f32 {
+//     match s {
+//         Shape::Square(side) => return side * side,
+//         Shape::Circle(radius) => return std::f32::consts::PI * radius * radius,
+//         Shape::Rectangle(l, b) => return l * b,
+//     }
+// }
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// // error handling in rust
+
+// // result enum
+
+// use std::fs;
+
+// fn main() {
+//     let contents = fs::read_to_string("a.txt");
+
+//     match  contents {
+//         Ok(contents) => println!("{}", contents),
+//         Err(e) => println!("{}", e),
+//     }
+// }
+
+// option enum
 
 fn main() {
-    let shape_square = Shape::Square(4.0);
-    let shape_circle = Shape::Circle(5.0);
-    let shape_rect = Shape::Rectangle(3.0, 5.0);
+    let ans = find_index_of_a(String::from("Sada"));
 
-    println!("{}", calculate_area(shape_square));
-    println!("{}", calculate_area(shape_circle));
-    println!("{}", calculate_area(shape_rect));
+    match ans {
+        Some(val) => println!("'a' is at index {}", val),
+        None => println!("'a' is not present in the string")
+    }
 }
 
-fn calculate_area(s: Shape) -> f32 {
-    match s {
-        Shape::Square(side) => return side * side,
-        Shape::Circle(radius) => return std::f32::consts::PI * radius * radius,
-        Shape::Rectangle(l, b) => return l * b,
+fn find_index_of_a(str: String) -> Option<u32> {
+    let mut index = 0;
+
+    for char in str.chars() {
+        if char == 'a' {
+            return Some(index);
+        }
+        index += 1;
     }
+
+    None
 }
