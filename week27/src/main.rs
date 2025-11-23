@@ -55,23 +55,50 @@
 
 //enums and pattern matching
 
-enum Direction {
-    North,
-    South,
-    East,
-    West,
+// enum Direction {
+//     North,
+//     South,
+//     East,
+//     West,
+// }
+
+// fn main() {
+//     let direction = Direction::East;
+
+//     steer(direction);
+// }
+
+// fn steer(dir: Direction) {
+//     match dir {
+//         Direction::North => println!("North direction"),
+//         Direction::South => println!("South direction"),
+//         _ => println!("Horizontal direction"),                  // default
+//     }
+// }
+
+// enums with values
+
+
+enum Shape {
+    Square(f32),
+    Circle(f32),
+    Rectangle(f32, f32)
 }
 
 fn main() {
-    let direction = Direction::East;
+    let shape_square = Shape::Square(4.0);
+    let shape_circle = Shape::Circle(5.0);
+    let shape_rect = Shape::Rectangle(3.0, 5.0);
 
-    steer(direction);
+    println!("{}", calculate_area(shape_square));
+    println!("{}", calculate_area(shape_circle));
+    println!("{}", calculate_area(shape_rect));
 }
 
-fn steer(dir: Direction) {
-    match dir {
-        Direction::North => println!("North direction"),
-        Direction::South => println!("South direction"),
-        _ => println!("Horizontal direction"),                  // default
+fn calculate_area(s: Shape) -> f32 {
+    match s {
+        Shape::Square(side) => return side * side,
+        Shape::Circle(radius) => return std::f32::consts::PI * radius * radius,
+        Shape::Rectangle(l, b) => return l * b,
     }
 }
