@@ -57,24 +57,75 @@
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// generics over structs
+// // generics over structs
 
-struct Rect<T> {
-    width: T,
-    height: T,
+// struct Rect<T> {
+//     width: T,
+//     height: T,
+// }
+
+// impl<T: std::ops::Mul<Output = T> + Copy> Rect<T> {
+//     fn area(&self) -> T {
+//         return self.width * self.height;
+//     }
+// }
+
+// fn main() {
+//     let r = Rect {
+//         width: 1.0,
+//         height: 4.0,
+//     };
+
+//     println!("{}", r.area());
+// }
+
+// --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// custom traits
+
+use std::f32::consts::PI;
+
+trait Shape {                       // custom trait
+    fn area(&self) -> f32;
 }
 
-impl<T: std::ops::Mul<Output = T> + Copy> Rect<T> {
-    fn area(&self) -> T {
-        return self.width * self.height;
+struct Rect {
+    height: f32,
+    width: f32,
+}
+
+impl Shape for Rect {
+    fn area(&self) -> f32 {
+        return self.height * self.width;
     }
+}
+
+struct Circle {
+    radius: f32,
+}
+
+impl Shape for Circle {
+    fn area(&self) -> f32 {
+        return PI * self.radius * self.radius;
+    }
+}
+
+fn print_shape_area<T: Shape>(s: T) {                   // using custom 'shape' trait
+    println!("{}", s.area());
 }
 
 fn main() {
     let r = Rect {
-        width: 1.0,
-        height: 4.0,
+        height: 10.0,
+        width: 5.0,
     };
 
-    println!("{}", r.area());
+    let c = Circle {
+        radius: 5.0,
+    };
+
+    print_shape_area(r);
+    print_shape_area(c);
+
 }
+
