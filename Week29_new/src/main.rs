@@ -12,31 +12,54 @@
 // }
 
 
-// procedural macro
+// // procedural macro
 
-use std::fmt::Display;
-#[derive(Debug)]            // there is no Display macro
+// use std::fmt::Display;
+// #[derive(Debug)]            // there is no Display macro
 
-struct User {
-    username: String,
-    password: String,
+// struct User {
+//     username: String,
+//     password: String,
+//     age: u32,
+// }
+
+// // manually implementing display trait
+// impl Display for User {     // this is 'Display' trait
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "This is user age {}", self.age)
+//     }
+// }
+
+// fn main() {
+//     let u = User {
+//         username: String::from("Sada"),
+//         password: String::from("sada123"),
+//         age: 23,
+//     };
+
+//     println!("{:?}", u);
+//     println!("{}", u);
+// }
+
+
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// copy and clone macro
+
+#[derive(Debug, Clone, Copy)]               // it is used to copy the struct wich has stack values
+struct User  {
+    present: bool,
     age: u32,
 }
 
-// manually implementing display trait
-impl Display for User {     // this is 'Display' trait
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "This is user age {}", self.age)
-    }
-}
-
 fn main() {
-    let u = User {
-        username: String::from("Sada"),
-        password: String::from("sada123"),
+    let u1 = User {
+        present: true,
         age: 23,
     };
 
-    println!("{:?}", u);
-    println!("{}", u);
+    let u2 = u1;
+
+    println!("{:?}, {:?}", u1, u2);
 }
+
