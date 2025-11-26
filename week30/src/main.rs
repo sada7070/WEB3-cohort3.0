@@ -74,20 +74,39 @@
 
 // Lifetimes
 
-fn main() {
-    let str1 = String::from("Sada");
-    let ans;
-    {
-        let str2= String::from("");
-        ans = longest_string(&str1,  &str2);
-        println!("{}", ans);
-    }
-    //println!("{}", ans);                              // can not use 'ans' here even if it has scope here because str2 dont have scope here 
+// fn main() {
+//     let str1 = String::from("Sada");
+//     let ans;
+//     {
+//         let str2= String::from("");
+//         ans = longest_string(&str1,  &str2);
+//         println!("{}", ans);
+//     }
+//     //println!("{}", ans);                              // can not use 'ans' here even if it has scope here because str2 dont have scope here 
+// }
+
+// fn longest_string<'a>(s1: &'a String, s2: &'a String) -> &'a String {       // specifying lifetime of both string is 'a and compiler will select string with less scope among them
+//     if s1.len() > s2.len() {
+//         return s1;
+//     }
+//     s2
+// }
+
+// lifetimes in struct
+
+struct User<'a> {
+    username: &'a String,
+    password: &'a String
 }
 
-fn longest_string<'a>(s1: &'a String, s2: &'a String) -> &'a String {       // specifying lifetime of both string is 'a and compiler will select string with less scope among them
-    if s1.len() > s2.len() {
-        return s1;
-    }
-    s2
+fn main() {
+    let s1 = String::from("Sada");
+    let s2 = String::from("shiva");
+
+    let u = User {
+        username: &s1,
+        password: &s2,
+    };
+
+    println!("{}, {}", u.username, u.password);
 }
