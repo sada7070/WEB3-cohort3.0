@@ -26,7 +26,7 @@ pub fn counter_contract (
     instruction_data: &[u8],
 ) -> ProgramResult {
     let acc = next_account_info(&mut accounts.iter())?;               // '?' do what pattern matching does.
-    let mut counter_data = Counter::try_from_slice(&acc.data.borrow())?;       // getting data from counter struct. 
+    let mut counter_data = Counter::try_from_slice(&acc.data.borrow())?;       // getting data from counter struct and converting those binary info to structs. 
 
     let instruction_type = InstructionType::try_from_slice(instruction_data)?;      // reading the instruction what user what to do
 
@@ -39,7 +39,7 @@ pub fn counter_contract (
         }   
     }
 
-    counter_data.serialize(&mut *acc.data.borrow_mut());
+    counter_data.serialize(&mut *acc.data.borrow_mut())?;
 
     Ok(())
 }
