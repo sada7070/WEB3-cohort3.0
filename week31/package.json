@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "borsh": "^2.0.0"
+  }
+}
