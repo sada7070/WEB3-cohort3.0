@@ -1,6 +1,7 @@
+import * as borsh from "borsh";
 import { expect, test } from "bun:test";
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
-import { COUNTER_SIZE } from "./types";
+import { COUNTER_SIZE, schema } from "./types";
 
 let adminAccount = Keypair.generate();
 let dataAccount = Keypair.generate();
@@ -31,5 +32,11 @@ test("Accoubt initiated", async() => {
     await connection.confirmTransaction(signature);
 
     console.log(dataAccount.publicKey.toBase58());
-})
 
+    // read dataAccount and ensure it is empty
+    const dataAccountInfo = await connection.getAccountInfo(dataAccount.publicKey);
+    const counter = borsh.deserialize(schema, dataAccountInfo?.data);
+
+    console.log(counter?.count);
+    expect(counter?.count).toBe(0);
+});
