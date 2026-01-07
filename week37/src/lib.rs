@@ -29,7 +29,8 @@ fn process_instruction(
 
     let ix = create_account(user_acc.key, pda.key, 1000000000, 8, program_id);
 
-    invoke_signed(&ix, accounts, &[seeds, &[&[bump]]]);
+    let signers_seed = &[user_acc.key.as_ref(), b"user", &[bump]];
+    invoke_signed(&ix, accounts, &[signers_seed])?;
     
     Ok(())
 }
