@@ -4,8 +4,8 @@ use solana_program::{
     entrypoint,
     pubkey::Pubkey,
     program::invoke_signed,
+    system_instruction::create_account,
 };
-use solana_system_interface::instruction as system_instruction;
 
 
 entrypoint!(process_instruction);
@@ -27,7 +27,7 @@ fn process_instruction(
 
     let (pda_pub_key, bump) = Pubkey::find_program_address(seeds, program_id);
 
-    let ix = system_instruction::create_account(user_acc.key, pda.key, 1000000000, 8, program_id);
+    let ix = create_account(user_acc.key, pda.key, 1000000000, 8, program_id);
 
     invoke_signed(&ix, accounts, &[seeds, &[&[bump]]]);
     
