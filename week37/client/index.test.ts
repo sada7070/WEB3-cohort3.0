@@ -44,14 +44,11 @@ describe("Create PDA from client", () => {
         tx.feePayer = payer.publicKey;
         tx.recentBlockhash = vm.latestBlockhash();
         tx.sign(payer);
-        let res = vm.sendTransaction(tx);
-        console.log(res.toString());
+        vm.sendTransaction(tx);
     });
 
     test("should create pda", () => {
         const balance = vm.getBalance(pda);
-        console.log(balance);
-        console.log(Number(balance));
         expect(Number(balance)).toBeGreaterThan(0);
         expect(Number(balance)).toBe(LAMPORTS_PER_SOL*1);
     })
