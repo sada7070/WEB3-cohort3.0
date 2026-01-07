@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 solana-program = "3.0.0"
+solana-system-interface = { version = "2.0", features = ["bincode"] }
