@@ -9,25 +9,25 @@ let dataAccount = Keypair.generate();
 const connection = new Connection("http://127.0.0.1:8899");
 const PROGRAM_ID = new PublicKey("6Mib5LvBb6aWuPqCDEFFKWK5PiKJQe8m3sHRhfW2usn2");
 
-test("Accoubt initiated", async() => {
+test("Account initiated", async() => {
     const txn = await connection.requestAirdrop(adminAccount.publicKey, 1 * LAMPORTS_PER_SOL);      // airdroping some SOL to adminAccount
     await connection.confirmTransaction(txn);
 
     // creating dataAccount
     const lamports = await connection.getMinimumBalanceForRentExemption(COUNTER_SIZE);
 
-    const createAccountInstruction = SystemProgram.createAccount({
-        fromPubkey: adminAccount.publicKey,
+    const dataAccountInstruction = SystemProgram.createAccount({
+        fromPubkey: adminAccount.publicKey, 
         lamports,
         space: COUNTER_SIZE,
         programId: PROGRAM_ID,                              // this PROGRAM_ID owns this dataAccount we are creating
         newAccountPubkey: dataAccount.publicKey,            // assigned the public key we generating at first
     });
 
-    const createAccountTxn = new Transaction();
-    createAccountTxn.add(createAccountInstruction);         // adding instructions to the transaction
+    const dataAccountTxn = new Transaction();           // creating new transaction
+    dataAccountTxn.add(dataAccountInstruction);         // adding instructions to the transaction
 
-    const signature = await connection.sendTransaction(createAccountTxn, [adminAccount, dataAccount]);
+    const signature = await connection.sendTransaction(dataAccountTxn, [adminAccount, dataAccount]);
 
     await connection.confirmTransaction(signature);
 
@@ -35,8 +35,13 @@ test("Accoubt initiated", async() => {
 
     // read dataAccount and ensure it is empty
     const dataAccountInfo = await connection.getAccountInfo(dataAccount.publicKey);
-    const counter = borsh.deserialize(schema, dataAccountInfo?.data);
 
-    console.log(counter?.count);
-    expect(counter?.count).toBe(0);
+    if (!dataAccountInfo?.data) {
+        throw new Error("Account has no data");
+    }
+
+    const counter = borsh.deserialize(schema, Uint8Array.from(dataAccountInfo.data));
+
+    console.log((counter as any).count);
+    expect((counter as any).count).toBe(0);
 });

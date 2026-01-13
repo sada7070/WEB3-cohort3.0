@@ -14,4 +14,4 @@ export const schema: borsh.Schema = {                  // schema to represent ho
     }
 }
 
-export const COUNTER_SIZE = borsh.serialize(schema, new CounterAccount({count: 0})).length;         // calculating size required to create data account
+export const COUNTER_SIZE = borsh.serialize(schema, new CounterAccount({count: 0})).length;         // calculating size required to create data account 
