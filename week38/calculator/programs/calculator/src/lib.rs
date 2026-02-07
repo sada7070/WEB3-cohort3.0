@@ -21,13 +21,13 @@ pub mod calculator {
         Ok(())
     }
 
-    pub fn double(ctx: Context<Double>) -> Result<()> {
-        ctx.accounts.account.num = ctx.accounts.account.num * 2;
+    pub fn mul(ctx: Context<Mul>, num:u32) -> Result<()> {
+        ctx.accounts.account.num = ctx.accounts.account.num * num;
         Ok(())
     }
 
-    pub fn half(ctx: Context<Half>) -> Result<()> {
-        ctx.accounts.account.num = ctx.accounts.account.num / 2;
+    pub fn div(ctx: Context<Div>, num:u32) -> Result<()> {
+        ctx.accounts.account.num = ctx.accounts.account.num / num;
         Ok(())
     }
 }
@@ -63,7 +63,7 @@ pub struct Sub<'info> {
 }
 
 #[derive(Accounts)]
-pub struct Double<'info> {
+pub struct Mul<'info> {
     #[account(mut)]
     pub account: Account<'info, DataShape>,
     #[account(mut)]
@@ -71,7 +71,7 @@ pub struct Double<'info> {
 }
 
 #[derive(Accounts)]
-pub struct Half<'info> {
+pub struct Div<'info> {
     #[account(mut)]
     pub account: Account<'info, DataShape>,
     #[account(mut)]
